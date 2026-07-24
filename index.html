@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Get Offer</title>
+    <link rel="stylesheet" href="./styles.css?v=20260724-fit9" />
+  </head>
+  <body>
+    <svg aria-hidden="true" class="sprite">
+      <symbol id="icon-briefcase" viewBox="0 0 24 24">
+        <path d="M10 6h4V5a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1Zm-5 0h14a2 2 0 0 1 2 2v10a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V8a2 2 0 0 1 2-2Zm7 7a2 2 0 0 0 2-2H5v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-1h-7a2 2 0 0 0 0 2Z" />
+      </symbol>
+      <symbol id="icon-bell" viewBox="0 0 24 24">
+        <path d="M12 22a2.8 2.8 0 0 0 2.6-1.8H9.4A2.8 2.8 0 0 0 12 22Zm7-5-1.6-1.8V10a5.4 5.4 0 0 0-4.2-5.3V3.7a1.2 1.2 0 1 0-2.4 0v1a5.4 5.4 0 0 0-4.2 5.3v5.2L5 17a1 1 0 0 0 .8 1.6h12.4A1 1 0 0 0 19 17Z" />
+      </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm8.3 8.4L20 8.2V7l-8 5.4L4 7v1.2l7.7 5.2a1 1 0 0 0 .6 0Z" />
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 24 24">
+        <path d="M4 19h16a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1V4a1 1 0 1 1 2 0v15Zm4-2a1 1 0 0 1-1-1v-5a1 1 0 0 1 2 0v5a1 1 0 0 1-1 1Zm5 0a1 1 0 0 1-1-1V7a1 1 0 1 1 2 0v9a1 1 0 0 1-1 1Zm5 0a1 1 0 0 1-1-1v-8a1 1 0 1 1 2 0v8a1 1 0 0 1-1 1Z" />
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="M9.4 16.6 4.9 12a1.2 1.2 0 1 0-1.7 1.7l5.4 5.4a1.2 1.2 0 0 0 1.7 0L21 8.3a1.2 1.2 0 0 0-1.7-1.7l-9.9 10Z" />
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <path d="M10.8 4a6.8 6.8 0 0 1 5.4 11l3.4 3.4a1.1 1.1 0 0 1-1.6 1.6l-3.4-3.4A6.8 6.8 0 1 1 10.8 4Zm0 2.2a4.6 4.6 0 1 0 0 9.2 4.6 4.6 0 0 0 0-9.2Z" />
+      </symbol>
+      <symbol id="icon-user" viewBox="0 0 24 24">
+        <path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.4 0-8 2.5-8 5.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5c0-3-3.6-5.5-8-5.5Z" />
+      </symbol>
+      <symbol id="icon-sliders" viewBox="0 0 24 24">
+        <path d="M6 4a1 1 0 0 1 1 1v1h13a1 1 0 1 1 0 2H7v1a1 1 0 0 1-2 0V8H4a1 1 0 1 1 0-2h1V5a1 1 0 0 1 1-1Zm8 6a1 1 0 0 1 1 1v1h5a1 1 0 1 1 0 2h-5v1a1 1 0 1 1-2 0v-1H4a1 1 0 1 1 0-2h9v-1a1 1 0 0 1 1-1Zm-5 6a1 1 0 0 1 1 1v1h10a1 1 0 1 1 0 2H10v1a1 1 0 1 1-2 0v-1H4a1 1 0 1 1 0-2h4v-1a1 1 0 0 1 1-1Z" />
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24">
+        <path d="M12 4a1.2 1.2 0 0 1 1.2 1.2v5.6h5.6a1.2 1.2 0 0 1 0 2.4h-5.6v5.6a1.2 1.2 0 0 1-2.4 0v-5.6H5.2a1.2 1.2 0 1 1 0-2.4h5.6V5.2A1.2 1.2 0 0 1 12 4Z" />
+      </symbol>
+      <symbol id="icon-copy" viewBox="0 0 24 24">
+        <path d="M8 7a3 3 0 0 1 3-3h7a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-1v1a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-7a3 3 0 0 1 3-3h1V7Zm2 1h4a3 3 0 0 1 3 3v4h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7a1 1 0 0 0-1 1v1Zm-3 2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1H7Z" />
+      </symbol>
+    </svg>
+
+    <header class="topbar">
+      <a class="brand" href="#resume" data-nav="resume" aria-label="Get Offer 首页">
+        <span class="brand-mark"><svg class="icon"><use href="#icon-briefcase"></use></svg></span>
+        <span>
+          <strong>Get Offer</strong>
+          <small>职位推送 · 轨迹记录 · 匹配分析</small>
+        </span>
+      </a>
+      <nav class="tabs" aria-label="主导航">
+        <button class="tab is-active" data-nav="resume"><svg class="icon"><use href="#icon-user"></use></svg><span>目标</span></button>
+        <button class="tab" data-nav="today"><svg class="icon"><use href="#icon-bell"></use></svg><span>今日</span></button>
+        <button class="tab" data-nav="tracker"><svg class="icon"><use href="#icon-briefcase"></use></svg><span>轨迹</span></button>
+        <button class="tab" data-nav="assessment"><svg class="icon"><use href="#icon-check"></use></svg><span>测评</span></button>
+        <button class="tab" data-nav="settings"><svg class="icon"><use href="#icon-sliders"></use></svg><span>设置</span></button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="resume" class="view is-active" aria-labelledby="resumeTitle">
+        <div class="home-shell">
+          <aside class="home-rail" aria-label="首页导航">
+            <div class="rail-logo">
+              <svg class="icon"><use href="#icon-briefcase"></use></svg>
+              <b>Get Offer</b>
+            </div>
+            <nav class="rail-nav">
+              <button class="rail-button is-active" data-nav="resume" aria-label="目标"><svg class="icon"><use href="#icon-user"></use></svg></button>
+              <button class="rail-button" data-nav="today" aria-label="今日推荐"><svg class="icon"><use href="#icon-bell"></use></svg></button>
+              <button class="rail-button" data-nav="tracker" aria-label="轨迹"><svg class="icon"><use href="#icon-briefcase"></use></svg></button>
+              <button class="rail-button" data-nav="settings" aria-label="设置"><svg class="icon"><use href="#icon-sliders"></use></svg></button>
+            </nav>
+            <button id="notifyBtnHome" class="rail-button" type="button" aria-label="开启提醒"><svg class="icon"><use href="#icon-bell"></use></svg></button>
+          </aside>
+
+          <section class="home-main" aria-labelledby="resumeTitle">
+            <header class="home-header">
+              <div>
+                <h1 id="resumeTitle">Hi, 开始匹配秋招岗位</h1>
+                <p>输入目标岗位，上传简历，然后抓取公司招聘专站职位。</p>
+              </div>
+              <div class="home-search">
+                <svg class="icon"><use href="#icon-search"></use></svg>
+                <input id="jobSearch" type="search" placeholder="搜索岗位、公司、技能" autocomplete="off" />
+              </div>
+            </header>
+
+            <div class="home-grid">
+              <section class="panel target-panel">
+                <div class="panel-title compact-title">
+                  <h2>目标岗位</h2>
+                  <button id="startRecommendBtn" class="button primary" type="button"><svg class="icon"><use href="#icon-search"></use></svg><span>抓取推荐</span></button>
+                </div>
+                <label class="field">
+                  <span>想投递的岗位</span>
+                  <textarea id="targetRolesInput" rows="2" placeholder="管培生, 市场营销, 商业分析, 数据分析"></textarea>
+                </label>
+                <label class="field">
+                  <span>搜索关键词</span>
+                  <textarea id="targetKeywordsInput" rows="2" placeholder="graduate program, trainee, brand, pharma, beauty"></textarea>
+                </label>
+                <div class="field">
+                  <span>目标行业</span>
+                  <div id="targetCategoryChips" class="chip-row" role="group" aria-label="首页行业选择"></div>
+                </div>
+                <div class="target-actions">
+                  <button id="saveResumeBtn" class="button secondary" type="button"><svg class="icon"><use href="#icon-check"></use></svg><span>保存</span></button>
+                  <button id="crawlOfficialBtn" class="button secondary" type="button"><svg class="icon"><use href="#icon-search"></use></svg><span>刷新招聘源</span></button>
+                </div>
+                <p id="sourceStatus" class="status-line">未抓取</p>
+              </section>
+
+              <section class="panel resume-upload-panel">
+                <div class="panel-title compact-title">
+                  <h2>简历</h2>
+                  <div class="form-actions tight-actions">
+                    <label class="button secondary file-button">
+                      <input id="resumeFile" type="file" accept=".txt,.md,.pdf" />
+                      <svg class="icon"><use href="#icon-user"></use></svg><span>上传</span>
+                    </label>
+                    <button id="clearResumeBtn" class="button ghost" type="button">清空</button>
+                  </div>
+                </div>
+                <textarea id="resumeInput" rows="8" placeholder="粘贴简历，或上传 PDF/txt/md。"></textarea>
+                <p id="resumeUploadStatus" class="status-line">支持 PDF，本地解析。</p>
+              </section>
+
+              <aside class="panel resume-profile-panel">
+                <div class="profile-topline">
+                  <div class="score-card mini-score">
+                    <strong id="resumeReadiness">--</strong>
+                    <span>简历画像</span>
+                  </div>
+                  <div>
+                    <div class="panel-title compact-title">
+                      <h2>修改建议</h2>
+                      <button id="aiAnalyzeResumeBtn" class="mini-button" type="button">AI</button>
+                    </div>
+                    <p id="aiSummary">上传简历后给出简短修改方向。</p>
+                  </div>
+                </div>
+                <div id="resumeSkillChips" class="chip-row compact-chips"></div>
+                <ul id="aiTipList" class="plain-list compact-list"></ul>
+                <ul id="aiGapList" class="plain-list compact-list"></ul>
+                <ul id="resumeRoleHints" class="plain-list compact-list"></ul>
+                <span id="aiProviderBadge" class="counter hidden-node">本地</span>
+                <p id="aiAnalysisStatus" class="status-line">未分析</p>
+                <input id="aiEndpointInput" type="hidden" />
+                <input id="aiModelInput" type="hidden" />
+                <ul id="aiStrengthList" class="hidden-node"></ul>
+                <ul id="aiRoleList" class="hidden-node"></ul>
+              </aside>
+
+              <section class="panel match-result match-strip">
+                <div class="match-input">
+                  <div class="panel-title compact-title">
+                    <h2>JD 匹配度</h2>
+                    <button id="analyzeBtn" class="button primary"><svg class="icon"><use href="#icon-chart"></use></svg><span>检测</span></button>
+                  </div>
+                  <textarea id="jdInput" rows="4" placeholder="粘贴 JD 或从职位卡片进入匹配"></textarea>
+                  <div class="preset-row hidden-node" id="jdPresets"></div>
+                </div>
+                <div class="score-ring" aria-label="匹配分数">
+                  <svg viewBox="0 0 120 120">
+                    <circle class="track" cx="60" cy="60" r="52"></circle>
+                    <circle id="scoreCircle" class="progress" cx="60" cy="60" r="52"></circle>
+                  </svg>
+                  <div><strong id="fitScore">--</strong><span>匹配</span></div>
+                </div>
+                <div class="match-notes">
+                  <div>
+                    <h2>优势</h2>
+                    <ul id="strengthList" class="plain-list compact-list"></ul>
+                  </div>
+                  <div>
+                    <h2>补强</h2>
+                    <ul id="gapList" class="plain-list compact-list"></ul>
+                  </div>
+                </div>
+                <textarea id="coverLetter" class="hidden-node" rows="1" readonly></textarea>
+              </section>
+            </div>
+          </section>
+
+          <aside class="home-side">
+            <section class="panel home-guide-panel">
+              <div class="panel-title compact-title">
+                <h2>公司搜索</h2>
+                <button class="mini-button" type="button" data-nav="today">去搜索</button>
+              </div>
+              <p>公司招聘专站、校招站和 ATS 平台的搜索结果统一放在今日推荐页。</p>
+              <button class="button primary" type="button" data-nav="today"><svg class="icon"><use href="#icon-search"></use></svg><span>打开公司搜索</span></button>
+            </section>
+            <section class="panel home-recommend-panel">
+              <div class="panel-title compact-title">
+                <h2>今日候选</h2>
+                <button class="mini-button" type="button" data-nav="today">全部</button>
+              </div>
+              <div id="homeJobPreview" class="home-job-preview"></div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section id="today" class="view" aria-labelledby="todayTitle">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Daily Push</p>
+            <h1 id="todayTitle">按目标岗位推荐的今日职位</h1>
+          </div>
+          <div class="heading-actions">
+            <button id="notifyBtn" class="button secondary"><svg class="icon"><use href="#icon-bell"></use></svg><span>开启提醒</span></button>
+            <a id="digestMailLink" class="button primary" href="#"><svg class="icon"><use href="#icon-mail"></use></svg><span>发送给自己</span></a>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <aside class="panel filters-panel">
+            <div class="panel-title">
+              <h2>筛选</h2>
+              <span id="resultCount" class="counter">0</span>
+            </div>
+            <div id="resumeGate" class="resume-gate">
+              <b>未填写目标</b>
+              <button class="mini-button" type="button" data-nav="resume">填写</button>
+            </div>
+            <label class="field">
+              <span>关键词</span>
+              <span class="search-box">
+                <svg class="icon"><use href="#icon-search"></use></svg>
+                <input id="jobSearchToday" type="search" placeholder="岗位、公司、技能" autocomplete="off" />
+              </span>
+            </label>
+            <div class="field">
+              <span>城市</span>
+              <div id="cityFilters" class="chip-row" role="group" aria-label="城市筛选"></div>
+            </div>
+            <div class="field">
+              <span>行业</span>
+              <div id="categoryFilters" class="chip-row" role="group" aria-label="行业筛选"></div>
+            </div>
+            <label class="field">
+              <span>最低匹配度</span>
+              <input id="minScore" type="range" min="0" max="95" value="40" />
+              <b id="minScoreValue">40%</b>
+            </label>
+            <div class="metric-stack">
+              <div><strong id="todayJobsCount">0</strong><span>推荐</span></div>
+              <div><strong id="deadlineCount">0</strong><span>7天内截止</span></div>
+              <div><strong id="appliedCount">0</strong><span>已跟进</span></div>
+            </div>
+          </aside>
+
+          <div class="content-stack">
+            <section class="panel digest-panel" aria-labelledby="digestTitle">
+              <div>
+                <h2 id="digestTitle">今日摘要</h2>
+                <p id="digestPreview">还没有生成摘要。</p>
+              </div>
+              <button id="copyDigestBtn" class="button ghost"><svg class="icon"><use href="#icon-copy"></use></svg><span>复制摘要</span></button>
+            </section>
+            <section id="jobList" class="job-list" aria-label="职位列表"></section>
+          </div>
+
+          <aside class="today-source-column">
+            <section class="panel company-search-panel">
+              <div class="panel-title compact-title">
+                <h2>公司搜索</h2>
+                <span id="sourceCount" class="counter">0</span>
+              </div>
+              <p class="search-helper">输入公司名会优先查找校招站、企业 careers 或 ATS 招聘页；填写招聘页则直接抓取该页面。</p>
+              <label class="field">
+                <span>公司名</span>
+                <input id="customCompanyInput" placeholder="例如 欧莱雅, 强生, 宝洁" />
+              </label>
+              <label class="field">
+                <span>招聘专站</span>
+                <input id="customCompanyUrlInput" placeholder="可选，例如 Workday / careers / campus 链接" />
+              </label>
+              <label class="field">
+                <span>行业</span>
+                <select id="customCompanyCategory">
+                  <option>药企</option>
+                  <option>快消</option>
+                  <option>外企</option>
+                  <option>美妆</option>
+                  <option>互联网</option>
+                </select>
+              </label>
+              <button id="addCustomCompanyBtn" class="button primary" type="button"><svg class="icon"><use href="#icon-plus"></use></svg><span>搜索公司岗位</span></button>
+            </section>
+
+            <section class="panel source-card">
+              <div class="panel-title compact-title">
+                <h2>招聘源池</h2>
+                <span id="sourceCountToday" class="counter">0</span>
+              </div>
+              <div class="source-toolbar">
+                <button id="crawlOfficialBtnToday" class="button secondary" type="button"><svg class="icon"><use href="#icon-search"></use></svg><span>抓取招聘源</span></button>
+                <button id="clearCustomCompaniesBtn" class="mini-button" type="button">清理自定义</button>
+                <button id="restoreDefaultSourcesBtn" class="mini-button" type="button">恢复默认</button>
+              </div>
+              <div id="sourceList" class="source-list"></div>
+              <p id="sourceStatusToday" class="status-line">未抓取</p>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section id="tracker" class="view" aria-labelledby="trackerTitle">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Pipeline</p>
+            <h1 id="trackerTitle">求职轨迹</h1>
+          </div>
+          <button id="openAddFormBtn" class="button primary"><svg class="icon"><use href="#icon-plus"></use></svg><span>新增记录</span></button>
+        </div>
+
+        <div class="tracker-layout">
+          <div class="tracker-main">
+            <section class="panel email-sync-panel" aria-labelledby="emailSyncTitle">
+              <div class="panel-title">
+                <h2 id="emailSyncTitle">邮箱投递抓取</h2>
+                <span id="emailSyncStatus" class="counter">未连接</span>
+              </div>
+              <div class="email-sync-grid">
+                <label class="field">
+                  <span>邮箱服务</span>
+                  <select id="emailProvider">
+                    <option value="gmail">Gmail</option>
+                    <option value="outlook">Outlook</option>
+                    <option value="qq">QQ 邮箱</option>
+                    <option value="163">网易邮箱</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>搜索词</span>
+                  <input id="emailSyncQuery" placeholder="投递 简历 招聘 笔试 面试 offer" />
+                </label>
+                <div class="email-sync-actions">
+                  <button id="connectEmailBtn" class="button secondary" type="button"><svg class="icon"><use href="#icon-mail"></use></svg><span>连接邮箱</span></button>
+                  <a id="emailSearchLink" class="button secondary" href="#" target="_blank" rel="noreferrer"><svg class="icon"><use href="#icon-search"></use></svg><span>打开邮箱搜索</span></a>
+                  <button id="syncMailboxBtn" class="button primary" type="button"><svg class="icon"><use href="#icon-check"></use></svg><span>同步轨迹</span></button>
+                </div>
+                <label class="field wide">
+                  <span>邮件内容导入</span>
+                  <textarea id="mailboxPaste" rows="4" placeholder="粘贴招聘邮件正文、投递确认、笔试或面试通知"></textarea>
+                </label>
+              </div>
+              <div id="emailSyncStats" class="sync-stats"></div>
+            </section>
+
+            <div id="trackerBoard" class="tracker-board" aria-label="投递看板"></div>
+          </div>
+
+          <form id="applicationForm" class="panel application-form">
+            <input type="hidden" id="editingApplicationId" />
+            <label class="field">
+              <span>岗位</span>
+              <input id="applicationTitle" required placeholder="例如 AI 产品经理校招" />
+            </label>
+            <label class="field">
+              <span>公司</span>
+              <input id="applicationCompany" required placeholder="公司名称" />
+            </label>
+            <label class="field">
+              <span>状态</span>
+              <select id="applicationStatus"></select>
+            </label>
+            <label class="field">
+              <span>截止日期</span>
+              <input id="applicationDeadline" type="date" />
+            </label>
+            <label class="field wide">
+              <span>链接</span>
+              <input id="applicationUrl" type="url" placeholder="https://..." />
+            </label>
+            <label class="field wide">
+              <span>备注</span>
+              <textarea id="applicationNotes" rows="3" placeholder="内推人、笔试时间、面试反馈"></textarea>
+            </label>
+            <div class="form-actions">
+              <button class="button primary" type="submit"><svg class="icon"><use href="#icon-check"></use></svg><span>保存</span></button>
+              <button id="cancelEditBtn" class="button secondary" type="button">清空</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="assessment" class="view" aria-labelledby="assessmentTitle">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Assessment</p>
+            <h1 id="assessmentTitle">秋招准备度测评</h1>
+          </div>
+          <button id="scoreAssessmentBtn" class="button primary"><svg class="icon"><use href="#icon-check"></use></svg><span>出结果</span></button>
+        </div>
+        <div class="assessment-layout">
+          <div class="assessment-main">
+            <form id="assessmentForm" class="question-list"></form>
+            <section id="practicePanel" class="panel practice-panel" aria-labelledby="practiceTitle">
+              <div class="panel-title">
+                <div>
+                  <h2 id="practiceTitle">笔试题型练习</h2>
+                  <p>点击题型展开练习；也可以上传自己的题库。</p>
+                </div>
+                <label class="button secondary file-button">
+                  <svg class="icon"><use href="#icon-plus"></use></svg>
+                  <span>上传题库</span>
+                  <input id="questionBankFile" type="file" accept=".json,.csv,.txt,.md,text/plain,application/json" />
+                </label>
+              </div>
+              <div class="practice-actions">
+                <button id="clearQuestionBankBtn" class="mini-button" type="button">清空上传题库</button>
+                <span id="questionBankStatus" class="status-line">支持 JSON / CSV / TXT</span>
+              </div>
+              <div id="practiceTypeList" class="practice-type-list"></div>
+              <div id="practiceQuestionList" class="practice-question-list"></div>
+            </section>
+          </div>
+          <aside class="panel assessment-result">
+            <div class="score-card">
+              <strong id="assessmentScore">--</strong>
+              <span>准备度</span>
+            </div>
+            <div id="assessmentBreakdown" class="breakdown"></div>
+            <div>
+              <h2>下一步</h2>
+              <ul id="assessmentAdvice" class="plain-list"></ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="settings" class="view" aria-labelledby="settingsTitle">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">Profile</p>
+            <h1 id="settingsTitle">个人推送设置</h1>
+          </div>
+          <button id="saveProfileBtn" class="button primary"><svg class="icon"><use href="#icon-check"></use></svg><span>保存</span></button>
+        </div>
+
+        <div class="settings-grid">
+          <section class="panel profile-panel">
+            <label class="field">
+              <span>邮箱</span>
+              <input id="profileEmail" type="email" placeholder="name@example.com" autocomplete="email" />
+            </label>
+            <label class="field">
+              <span>目标岗位</span>
+              <input id="profileRoles" placeholder="AI产品经理, 数据分析师, 算法工程师" />
+            </label>
+            <label class="field">
+              <span>搜索关键词</span>
+              <input id="profileKeywords" placeholder="graduate program, trainee, brand, pharma, beauty" />
+            </label>
+            <label class="field">
+              <span>目标城市</span>
+              <input id="profileCities" placeholder="上海, 北京, 深圳, 杭州" />
+            </label>
+            <label class="field">
+              <span>每日推送时间</span>
+              <input id="pushTime" type="time" value="09:00" />
+            </label>
+            <div class="mail-actions">
+              <a id="inboxLink" class="button secondary" href="#" target="_blank" rel="noreferrer"><svg class="icon"><use href="#icon-mail"></use></svg><span>打开邮箱</span></a>
+              <button id="exportDataBtn" class="button ghost" type="button"><svg class="icon"><use href="#icon-copy"></use></svg><span>导出数据</span></button>
+            </div>
+          </section>
+
+          <section class="panel automation-panel">
+            <h2>零成本自动推荐方案</h2>
+            <div class="integration-list">
+              <div><b>职位来源</b><span>本地服务访问公开招聘专站、校招站和 ATS 页面</span></div>
+              <div><b>每日推荐</b><span>页面打开时按当天自动抓取一次</span></div>
+              <div><b>邮箱轨迹</b><span>打开邮箱搜索后粘贴邮件正文，本地解析</span></div>
+              <div><b>匹配判断</b><span>用本地关键词和规则评分，不调用付费 API</span></div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
