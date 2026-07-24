@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Get Offer</title>
-    <link rel="stylesheet" href="./styles.css?v=20260724-fit9" />
+    <link rel="stylesheet" href="./styles.css?v=20260725-home2" />
   </head>
   <body>
     <svg aria-hidden="true" class="sprite">
@@ -69,6 +69,7 @@
               <button class="rail-button is-active" data-nav="resume" aria-label="目标"><svg class="icon"><use href="#icon-user"></use></svg></button>
               <button class="rail-button" data-nav="today" aria-label="今日推荐"><svg class="icon"><use href="#icon-bell"></use></svg></button>
               <button class="rail-button" data-nav="tracker" aria-label="轨迹"><svg class="icon"><use href="#icon-briefcase"></use></svg></button>
+              <button class="rail-button" data-nav="assessment" aria-label="测评"><svg class="icon"><use href="#icon-check"></use></svg></button>
               <button class="rail-button" data-nav="settings" aria-label="设置"><svg class="icon"><use href="#icon-sliders"></use></svg></button>
             </nav>
             <button id="notifyBtnHome" class="rail-button" type="button" aria-label="开启提醒"><svg class="icon"><use href="#icon-bell"></use></svg></button>
@@ -96,14 +97,6 @@
                   <span>想投递的岗位</span>
                   <textarea id="targetRolesInput" rows="2" placeholder="管培生, 市场营销, 商业分析, 数据分析"></textarea>
                 </label>
-                <label class="field">
-                  <span>搜索关键词</span>
-                  <textarea id="targetKeywordsInput" rows="2" placeholder="graduate program, trainee, brand, pharma, beauty"></textarea>
-                </label>
-                <div class="field">
-                  <span>目标行业</span>
-                  <div id="targetCategoryChips" class="chip-row" role="group" aria-label="首页行业选择"></div>
-                </div>
                 <div class="target-actions">
                   <button id="saveResumeBtn" class="button secondary" type="button"><svg class="icon"><use href="#icon-check"></use></svg><span>保存</span></button>
                   <button id="crawlOfficialBtn" class="button secondary" type="button"><svg class="icon"><use href="#icon-search"></use></svg><span>刷新招聘源</span></button>
@@ -151,6 +144,17 @@
                 <ul id="aiStrengthList" class="hidden-node"></ul>
                 <ul id="aiRoleList" class="hidden-node"></ul>
               </aside>
+
+              <section class="panel target-refine-panel">
+                <label class="field keyword-field">
+                  <span>搜索关键词</span>
+                  <textarea id="targetKeywordsInput" rows="1" placeholder="graduate program, trainee, brand, pharma, beauty"></textarea>
+                </label>
+                <div class="field industry-field">
+                  <span>目标行业</span>
+                  <div id="targetCategoryChips" class="chip-row" role="group" aria-label="首页行业选择"></div>
+                </div>
+              </section>
 
               <section class="panel match-result match-strip">
                 <div class="match-input">
@@ -485,6 +489,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <script src="./app.js" defer></script>
+    <script src="./app.js?v=20260725-home2" defer></script>
+    <script src="./app-patch.js?v=20260725-home2" defer></script>
   </body>
 </html>
