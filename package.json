@@ -1,0 +1,14 @@
+{
+  "name": "get-offer",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Zero-cost recruitment assistant prototype with resume parsing, job source crawling, and application tracking.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check app.js && node --check server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
