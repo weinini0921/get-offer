@@ -884,3 +884,303 @@ body:not([data-view="resume"]) .view.is-active {
     overflow: visible;
   }
 }
+
+/* Final anti-crop layer. Keep this block last. */
+@media (min-width: 1101px) {
+  html,
+  body,
+  body[data-view="resume"],
+  body:not([data-view="resume"]) {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  main,
+  body[data-view="resume"] main,
+  body:not([data-view="resume"]) main {
+    width: min(1960px, calc(100vw - 56px));
+    height: calc(100dvh - 28px);
+    margin: 14px auto;
+    overflow: hidden;
+  }
+
+  .topbar,
+  body[data-view="resume"] .topbar {
+    left: max(28px, calc((100vw - 1960px) / 2));
+  }
+
+  .view.is-active,
+  body:not([data-view="resume"]) .view.is-active {
+    height: 100%;
+    min-height: 0;
+    overflow: auto;
+    scrollbar-gutter: stable;
+  }
+
+  body[data-view="resume"] #resume.view.is-active {
+    overflow: hidden;
+  }
+
+  #today.view.is-active,
+  #tracker.view.is-active,
+  #assessment.view.is-active,
+  #settings.view.is-active {
+    overflow: auto;
+    padding-bottom: 28px;
+  }
+
+  .dashboard-grid,
+  .tracker-layout,
+  .assessment-layout,
+  .settings-grid {
+    height: auto;
+    min-height: calc(100% - 74px);
+    overflow: visible;
+  }
+
+  .content-stack,
+  .tracker-main,
+  .assessment-main,
+  .today-source-column {
+    min-height: 0;
+  }
+
+  .home-shell {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .home-main {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    max-height: 100%;
+    overflow: auto;
+    padding-bottom: 20px;
+    scrollbar-gutter: stable;
+  }
+
+  .home-header {
+    margin-bottom: 12px;
+  }
+
+  .home-header h1 {
+    font-size: clamp(26px, 2vw, 32px);
+  }
+
+  .home-header p {
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .home-grid {
+    grid-template-columns: minmax(270px, 0.9fr) minmax(280px, 1fr) minmax(236px, 0.82fr);
+    grid-template-rows: minmax(260px, 1fr) 98px minmax(148px, 0.55fr);
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  body[data-view="resume"] .target-panel,
+  .resume-upload-panel,
+  .resume-profile-panel {
+    max-height: none;
+    min-height: 0;
+  }
+
+  body[data-view="resume"] .target-panel {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    gap: 10px;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  body[data-view="resume"] .target-panel .compact-title {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: center;
+    min-height: 42px;
+    gap: 12px;
+  }
+
+  body[data-view="resume"] .target-panel .compact-title h2 {
+    white-space: nowrap;
+  }
+
+  body[data-view="resume"] .target-panel .button.primary {
+    width: auto;
+    min-height: 40px;
+    padding-inline: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+
+  body[data-view="resume"] .target-panel .field {
+    grid-template-rows: auto minmax(0, 1fr);
+    align-content: start;
+    min-height: 0;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  body[data-view="resume"] .target-panel .field textarea {
+    height: 100%;
+    min-height: 92px;
+    max-height: none;
+    overflow: auto;
+  }
+
+  body[data-view="resume"] .target-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  body[data-view="resume"] .target-actions .button {
+    width: 100%;
+    min-height: 38px;
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+
+  body[data-view="resume"] .target-panel .status-line {
+    min-height: 18px;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .resume-upload-panel {
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  .resume-profile-panel {
+    padding: 20px;
+  }
+
+  .target-refine-panel {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) minmax(320px, 0.9fr);
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    overflow: hidden;
+  }
+
+  .target-refine-panel .field {
+    grid-template-rows: auto auto;
+    min-width: 0;
+  }
+
+  .target-refine-panel textarea {
+    height: 42px;
+    min-height: 42px;
+    overflow: auto;
+  }
+
+  .target-refine-panel .chip-row {
+    min-height: 42px;
+    max-height: 58px;
+    overflow: auto;
+  }
+
+  .target-refine-panel .chip {
+    min-height: 26px;
+  }
+
+  .match-strip {
+    grid-template-columns: minmax(280px, 1fr) 118px minmax(240px, 0.86fr);
+    gap: 14px;
+    min-height: 0;
+    padding: 14px 20px;
+    overflow: hidden;
+  }
+
+  .match-input {
+    min-height: 0;
+  }
+
+  .match-input textarea {
+    height: 62px;
+    min-height: 54px;
+  }
+
+  .match-strip .score-ring {
+    width: 96px;
+  }
+
+  .match-notes .compact-list {
+    max-height: 54px;
+  }
+}
+
+@media (min-width: 1101px) and (max-height: 760px) {
+  .home-main {
+    padding-top: 18px;
+    padding-bottom: 16px;
+  }
+
+  .home-header {
+    margin-bottom: 10px;
+  }
+
+  .home-header h1 {
+    font-size: 29px;
+  }
+
+  .home-grid {
+    grid-template-rows: minmax(252px, 1fr) 92px minmax(136px, 0.5fr);
+    gap: 10px;
+  }
+
+  body[data-view="resume"] .target-panel,
+  .resume-upload-panel,
+  .resume-profile-panel {
+    padding: 16px;
+  }
+
+  body[data-view="resume"] .target-panel .compact-title {
+    min-height: 38px;
+  }
+
+  body[data-view="resume"] .target-panel .field textarea {
+    min-height: 78px;
+  }
+
+  .target-refine-panel {
+    padding: 10px 16px;
+  }
+
+  .match-strip {
+    padding: 12px 18px;
+  }
+
+  .match-input textarea {
+    height: 50px;
+    min-height: 50px;
+  }
+}
+
+@media (min-width: 1101px) and (max-width: 1380px) {
+  .home-shell {
+    grid-template-columns: minmax(0, 1fr) clamp(230px, 19vw, 280px);
+  }
+
+  .home-main {
+    padding-left: 126px;
+    padding-right: 16px;
+  }
+
+  .home-grid {
+    grid-template-columns: minmax(260px, 0.95fr) minmax(260px, 1fr) minmax(220px, 0.82fr);
+  }
+
+  .target-refine-panel {
+    grid-template-columns: minmax(220px, 1fr) minmax(280px, 0.9fr);
+    align-items: center;
+  }
+}
