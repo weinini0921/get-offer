@@ -17,7 +17,51 @@ const MIME = {
   ".md": "text/markdown; charset=utf-8"
 };
 
-const server = http.createServer(async (req, res) => {
+const APPLICATION_URLS = {
+  loreal: "https://careers.loreal.com/en_US/jobs/SearchJobs?jobOffset=0&keyword={query}",
+  elc: "https://www.elcompanies.com/en/careers/jobs?search={query}",
+  sephora: "https://jobs.sephora.com/search-jobs?keywords={query}",
+  shiseido: "https://corp.shiseido.com/en/careers/search/?keywords={query}",
+  coty: "https://careers.coty.com/search/?q={query}",
+  beiersdorf: "https://www.beiersdorf.com/career/jobs?query={query}",
+  kao: "https://www.kao.com/global/en/careers/jobs/",
+  pg: "https://www.pgcareers.com/search-jobs?keywords={query}",
+  unilever: "https://careers.unilever.com/search-jobs?keywords={query}",
+  nestle: "https://www.nestle.com/jobs/search-jobs?keyword={query}",
+  mars: "https://careers.mars.com/global/en/search-results?keywords={query}",
+  mondelez: "https://www.mondelezinternational.com/careers/jobs/?search={query}",
+  pepsi: "https://www.pepsicojobs.com/main/jobs?keywords={query}",
+  coca: "https://careers.coca-colacompany.com/job-search-results/?keyword={query}",
+  danone: "https://careers.danone.com/search/?q={query}",
+  colgate: "https://jobs.colgate.com/search/?q={query}",
+  roche: "https://careers.roche.com/global/en/search-results?keywords={query}",
+  jnj: "https://www.careers.jnj.com/en/search-jobs?keywords={query}",
+  novartis: "https://www.novartis.com/careers/career-search?search_api_fulltext={query}",
+  pfizer: "https://www.pfizer.com/about/careers/search?keyword={query}",
+  sanofi: "https://jobs.sanofi.com/en/search-jobs?keywords={query}",
+  gsk: "https://jobs.gsk.com/en-gb/jobs?keywords={query}",
+  bayer: "https://career.bayer.com/en/search-jobs?keywords={query}",
+  lilly: "https://careers.lilly.com/us/en/search-results?keywords={query}",
+  merck: "https://www.merckgroup.com/en/careers.html",
+  astrazeneca: "https://careers.astrazeneca.com/search-jobs?keywords={query}",
+  siemens: "https://jobs.siemens.com/careers?query={query}",
+  bosch: "https://www.bosch.com/careers/jobs/?search={query}",
+  ikea: "https://www.ikea.com/global/en/this-is-ikea/work-with-us/",
+  kpmg: "https://kpmg.com/cn/en/home/careers/graduates.html",
+  pwc: "https://www.pwccn.com/en/careers/students.html",
+  deloitte: "https://www2.deloitte.com/cn/en/careers/students.html",
+  ey: "https://www.ey.com/en_cn/careers/job-search",
+  mckinsey: "https://www.mckinsey.com/careers/search-jobs/jobs?text={query}",
+  bcg: "https://careers.bcg.com/global/en/search-results?keywords={query}",
+  bytedance: "https://jobs.bytedance.com/campus/position?keywords={query}",
+  tencent: "https://join.qq.com/post.html",
+  alibaba: "https://talent.alibaba.com/campus/position-list?keyword={query}",
+  jd: "https://campus.jd.com/#/jobs",
+  meituan: "https://zhaopin.meituan.com/web/position",
+  bilibili: "https://jobs.bilibili.com/social/positions"
+};
+
+async function handleRequest(req, res) {
   try {
     const url = new URL(req.url, `http://${req.headers.host}`);
     if (req.method === "POST" && url.pathname === "/api/crawl") {
@@ -42,16 +86,28 @@ const server = http.createServer(async (req, res) => {
   } catch (error) {
     sendJson(res, { error: error.message || "server error" }, 500);
   }
-});
+}
 
-server.listen(PORT, HOST, () => {
-  console.log(`Get Offer: http://${HOST}:${PORT}/`);
-});
+const server = http.createServer(handleRequest);
+
+if (require.main === module) {
+  server.listen(PORT, HOST, () => {
+    console.log(`Get Offer: http://${HOST}:${PORT}/`);
+  });
+}
+
+module.exports = handleRequest;
 
 async function crawlSources(body) {
   const sourceIds = new Set(Array.isArray(body.sourceIds) ? body.sourceIds : []);
-  const sources = Array.isArray(body.sources) ? body.sources.filter((source) => sourceIds.has(source.id)) : [];
-  const queries = buildQueries(body.targetRoles, body.targetKeywords, body.resume);
+  const rawSources = Array.isArray(body.sources) ? body.sources : [];
+  const sources = sourceIds.size ? rawSources.filter((source) => sourceIds.has(source.id)) : rawSources;
+  const profile = body.profile || {};
+  const queries = buildQueries(
+    body.targetRoles || profile.roles,
+    body.targetKeywords || profile.keywords,
+    body.resume
+  );
   const jobs = [];
   const sourceStatus = {};
 
@@ -61,7 +117,7 @@ async function crawlSources(body) {
       const targets = await resolveRecruitingTargets(source, queries);
       if (isSearchSource(source.url, source) && targets.length === 1 && targets[0].url === source.url) {
         jobs.push(...fallbackSearchJobs(source, queries));
-        status.label = "生成专站搜索";
+        status.label = "定位投递入口";
         sourceStatus[source.id] = status;
         continue;
       }
@@ -85,13 +141,13 @@ async function crawlSources(body) {
       if (!extracted.length) jobs.push(...fallbackSearchJobs(usedTarget, queries));
       status.label = extracted.length
         ? `${usedTarget.url !== source.url ? "定位专站，" : ""}抓到 ${extracted.length} 条`
-        : "生成专站搜索";
+        : "定位投递入口";
       status.platform = usedTarget.platform || source.platform || "招聘专站";
       status.url = usedTarget.url || source.url;
       status.ok = true;
     } catch (error) {
       jobs.push(...fallbackSearchJobs(source, queries));
-      status.label = "招聘站限制访问";
+      status.label = "招聘站限制访问，保留投递入口";
       status.ok = false;
     }
     sourceStatus[source.id] = status;
@@ -197,7 +253,7 @@ function looksLikeRecruitmentUrl(url, label = "") {
 
 async function parseResume(body) {
   const filename = String(body.filename || "resume").toLowerCase();
-  const base64 = String(body.base64 || "").replace(/^data:.*?;base64,/, "");
+  const base64 = String(body.base64 || body.content || "").replace(/^data:.*?;base64,/, "");
   if (!base64) throw new Error("missing file data");
   const buffer = Buffer.from(base64, "base64");
   if (buffer.length > 12_000_000) throw new Error("file too large");
@@ -398,7 +454,7 @@ function extractJobsFromHtml(html, source, queries) {
   const sentences = text.split(/[。；;|｜\n\r]+/).map((item) => item.trim()).filter(Boolean);
   for (const sentence of sentences) {
     if (!looksLikeJob(sentence, queries)) continue;
-    jobs.push(makeJob(source, sentence.slice(0, 70), buildSearchUrl(source.url, queries[0], source), "招聘站文本"));
+    jobs.push(makeJob(source, sentence.slice(0, 70), buildSearchUrl(source.url, queries[0], source), "投递入口"));
     if (jobs.length >= 8) break;
   }
   return jobs;
@@ -407,7 +463,7 @@ function extractJobsFromHtml(html, source, queries) {
 function fallbackSearchJobs(source, queries) {
   const primaryQueries = queries.slice(0, 4);
   return primaryQueries.map((query) =>
-    makeJob(source, `${query} 招聘专站搜索`, buildSearchUrl(source.url, query, source), "招聘专站搜索入口")
+    makeJob(source, `${query} 投递入口`, buildSearchUrl(source.url, query, source), "投递入口")
   );
 }
 
@@ -424,7 +480,8 @@ function makeJob(source, title, url, sourceLabel) {
     sourceId: source.id,
     deadline: "",
     url,
-    linkLabel: sourceLabel.includes("搜索") ? "搜索岗位" : "打开岗位",
+    applyUrl: url,
+    linkLabel: sourceLabel.includes("投递") ? "去投递" : "打开岗位",
     tags,
     summary: `${sourceLabel}：根据你的目标岗位关键词从 ${source.company} 的${source.platform || "招聘专站"}提取或生成。`,
     jd: `${title} ${source.company} ${source.category} ${tags.join(" ")}`
@@ -443,15 +500,16 @@ function looksLikeJob(text, queries) {
 }
 
 function buildSearchUrl(baseUrl, query, source = {}) {
+  const template = APPLICATION_URLS[source.id];
+  const encoded = encodeURIComponent(query || "graduate trainee");
+  if (template) return template.replace("{query}", encoded);
   try {
     const url = new URL(baseUrl);
-    const host = url.hostname.replace(/^www\./, "");
-    const searchText = isSearchHost(host)
-      ? `${source.company || ""} ${query} careers campus graduate jobs China`
-      : `${source.company || ""} ${query} jobs campus graduate China 招聘 site:${host}`;
-    return `https://www.bing.com/search?q=${encodeURIComponent(searchText.trim())}`;
+    const host = url.hostname.replace(/^www\./, "").toLowerCase();
+    if (isSearchHost(host)) return baseUrl;
+    return url.toString();
   } catch {
-    return `https://www.bing.com/search?q=${encodeURIComponent(`${source.company || ""} ${query} careers campus graduate jobs China 招聘 校园招聘`)}`;
+    return "#";
   }
 }
 
