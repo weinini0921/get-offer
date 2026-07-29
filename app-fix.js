@@ -146,9 +146,25 @@
       if (!anchor) return;
       const current = anchor.getAttribute("href") || "";
       const replacement = officialApplyUrl(company, title);
-      if (replacement && !isLikelyDirectApplyUrl(current)) anchor.href = replacement;
-      anchor.textContent = "去投递";
+      if (replacement && !isLikelyDirectApplyUrl(current) && anchor.href !== replacement) {
+        anchor.href = replacement;
+      }
+      if (anchor.textContent !== "去投递") anchor.textContent = "去投递";
     });
+  }
+
+  function observeJobCards() {
+    if (window.__getOfferJobCardObserver) return;
+    let queued = false;
+    window.__getOfferJobCardObserver = new MutationObserver(() => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        patchJobCards();
+      });
+    });
+    window.__getOfferJobCardObserver.observe(document.body, { childList: true, subtree: true });
   }
 
   function removeTargetLiveRefresh() {
@@ -183,7 +199,7 @@
     patchFetch();
     removeTargetLiveRefresh();
     patchJobCards();
-    new MutationObserver(patchJobCards).observe(document.body, { childList: true, subtree: true });
+    observeJobCards();
   }
 
   if (document.readyState === "loading") {
